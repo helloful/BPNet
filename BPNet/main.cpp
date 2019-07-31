@@ -4,10 +4,10 @@ using namespace std;
 int main()
 {
 	BPNet bpnetwork;
-	vector<int>layer{ 1,2,3 };
+	vector<int>layer{3,3,4};
 	vector<double>input{ 0.3, 0.7, 0.4 };
 	vector<double>output{ 0.5,0.4,0.5,0.7 };
-	bpnetwork.init(layer);
+	bpnetwork.set(layer);
 	for (int i = 0; i < 100; i++)
 	{
 		bpnetwork.front(input, layer);
@@ -15,13 +15,11 @@ int main()
 		bpnetwork.update_weight();
 		bpnetwork.show();
 	}
+	system("pause");
 	return 0;
 }
-void test()
-{
-	cout << "test" << endl;
-}
+
 //
-//²Î¿¼×ÊÁÏ
+//å‚è€ƒèµ„æ–™
 //https://blog.csdn.net/aowuyuyu/article/details/79150146
 
