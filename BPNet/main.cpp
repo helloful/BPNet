@@ -17,6 +17,11 @@ int main()
 	}
 	return 0;
 }
+void test()
+{
+	cout << "test" << endl;
+}
 /*
+²Î¿¼×ÊÁÏ
 https://blog.csdn.net/aowuyuyu/article/details/79150146
 */
