@@ -31,7 +31,7 @@ void BPNet::init(const vector<int>&network_)
 		for (int j = 0; j < network_[i]; j++)
 		{
 			network.back().push_back(neuron());
-			if (i > 0) network[i][j].bias = 0.5;//不是输入层
+			if (i > 0) network[i][j].bias = 0.1;//不是输入层
 			if (i < layer_num - 1)//不是输出层
 			{
 				for (int k = 0; k < network_[i + 1]; k++)
@@ -67,6 +67,7 @@ void BPNet::front(vector<double>&input_, const vector<int>&network_)
 			network[i][j].output += network[i][j].bias;
 			network[i][j].output = sig(network[i][j].output);
 		}
+		cout << endl;
 	}
 }
 ///反向误差回传函数
@@ -87,9 +88,9 @@ void BPNet::back_p(const vector<double>&predict)
 	{
 		delta_total += 0.5*pow((predict[i] - network[2][i].output), 2);
 	}
-	//delta_total *= 0.5;////有多少个输出神经元，就乘1/n
+	
 	cout << "total delta is " << delta_total << endl;
-	//error = delta_total;
+	
 	for (int i = 0; i < network[1].size(); i++)
 	{
 		for (int j = 0; j < network[2].size(); j++)
