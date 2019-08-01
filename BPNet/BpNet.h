@@ -8,7 +8,7 @@ struct neuron
 	double bias;//偏置
 };
 typedef vector<neuron> layer;
-
+int cnt = 0;
 class BPNet
 {
 	double eta;//学习率
@@ -24,6 +24,7 @@ public:
 ///初始化函数
 void BPNet::init(const vector<int>&network_)
 {
+	eta = 0.6180339887;
 	int layer_num = network_.size();
 	for (int i = 0; i < layer_num; i++)
 	{
@@ -31,7 +32,7 @@ void BPNet::init(const vector<int>&network_)
 		for (int j = 0; j < network_[i]; j++)
 		{
 			network.back().push_back(neuron());
-			if (i > 0) network[i][j].bias = 0.1;//不是输入层
+			if (i > 0) network[i][j].bias = 0.2;//不是输入层
 			if (i < layer_num - 1)//不是输出层
 			{
 				for (int k = 0; k < network_[i + 1]; k++)
@@ -67,7 +68,6 @@ void BPNet::front(vector<double>&input_, const vector<int>&network_)
 			network[i][j].output += network[i][j].bias;
 			network[i][j].output = sig(network[i][j].output);
 		}
-		cout << endl;
 	}
 }
 ///反向误差回传函数
@@ -79,6 +79,7 @@ void BPNet::front(vector<double>&input_, const vector<int>&network_)
 而对于隐层而言，一个权重的改变会对所有神经元的输出均有影响，
 具体公式这部分的内容有一个网站说的特别详细（yongyuan.name/blog/back-propagtion.html）我也是参考他的公式并自己总结出来编写了代码。
 */
+
 void BPNet::back_p(const vector<double>&predict)
 {
 	double delta_total = 0.0;
@@ -88,15 +89,14 @@ void BPNet::back_p(const vector<double>&predict)
 	{
 		delta_total += 0.5*pow((predict[i] - network[2][i].output), 2);
 	}
-	
 	cout << "total delta is " << delta_total << endl;
-	
 	for (int i = 0; i < network[1].size(); i++)
 	{
 		for (int j = 0; j < network[2].size(); j++)
 		{
 			delta = -(predict[j] - network[2][j].output)*network[2][j].output*(1 - network[2][j].output)*network[1][i].output;
-			network[1][i].updata_w[j] = network[1][i].weight[j] - eta * delta;
+			network[1][i].updata_w[j] = network[1][i].weight[j] - eta * delta*1.0;
+			
 		}
 	}
 	delta = 0.0;
@@ -114,7 +114,6 @@ void BPNet::back_p(const vector<double>&predict)
 			network[0][i].updata_w[j] = network[0][i].weight[j] - eta * delta;
 		}
 	}
-
 }
 ///更新权重函数
 /*

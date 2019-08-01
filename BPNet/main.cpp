@@ -8,14 +8,12 @@ int main()
 	vector<double>input{ 0.3, 0.7, 0.4 };
 	vector<double>output{ 0.5,0.4,0.5,0.7 };
 	bpnetwork.init(layer);
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 1000; i++)
 	{
-		
 		bpnetwork.front(input, layer);
 		bpnetwork.back_p(output);
 		bpnetwork.update_weight();
 		bpnetwork.show();
-		system("pause");
 	}
 	system("pause");
 	return 0;
